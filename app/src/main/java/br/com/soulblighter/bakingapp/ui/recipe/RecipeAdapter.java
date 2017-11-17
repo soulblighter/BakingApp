@@ -1,7 +1,6 @@
 package br.com.soulblighter.bakingapp.ui.recipe;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -35,17 +34,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     void selectFragment(int position) {
         if (mTwoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putParcelable(StepActivity.ARG_ITEM, mValues);
-            arguments.putInt(StepActivity.ARG_POS, position);
-
             Fragment fragment;
             if (position == 0) {
-                fragment = new IngredientsFragment();
+                fragment = IngredientsFragment.newInstance(mValues);
             } else {
-                fragment = new StepFragment();
+                fragment = StepFragment.newInstance(mValues, position);
             }
-            fragment.setArguments(arguments);
 
             mParentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, fragment)
                 .commit();

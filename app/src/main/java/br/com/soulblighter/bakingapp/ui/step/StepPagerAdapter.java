@@ -1,7 +1,6 @@
 package br.com.soulblighter.bakingapp.ui.step;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -38,17 +37,12 @@ public class StepPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Bundle arguments = new Bundle();
-        arguments.putParcelable(StepActivity.ARG_ITEM, mData);
-        arguments.putInt(StepActivity.ARG_POS, position);
-
         Fragment fragment;
         if (position == 0) {
-            fragment = new IngredientsFragment();
+            fragment = IngredientsFragment.newInstance(mData);
         } else {
-            fragment = new StepFragment();
+            fragment = StepFragment.newInstance(mData, position);
         }
-        fragment.setArguments(arguments);
         return fragment;
     }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.squareup.picasso.Picasso;
 
@@ -29,12 +30,24 @@ public class StepFragment extends Fragment {
     private SimpleExoPlayerView mPlayerView;
     private Recipe mItem;
     private RecipePlayer mRecipePlayer;
+    private long mPlayerPosition = C.TIME_UNSET;
+
+    private final String SELECTED_POSITION = "player_position";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public StepFragment() {
+    }
+
+    public static StepFragment newInstance(Recipe recipe, int position) {
+        StepFragment fragment = new StepFragment();
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(StepActivity.ARG_ITEM, recipe);
+        arguments.putInt(StepActivity.ARG_POS, position);
+        fragment.setArguments(arguments);
+        return fragment;
     }
 
     @Override
@@ -47,6 +60,13 @@ public class StepFragment extends Fragment {
             getActivity().finish();
         }
 
+        if (savedInstanceState != null) {
+            long pos = savedInstanceState.getLong(SELECTED_POSITION, C.TIME_UNSET);
+            if(pos != C.TIME_UNSET) {
+                mPlayerPosition = pos;
+            }
+        }
+
     }
 
     @Override
@@ -55,7 +75,6 @@ public class StepFragment extends Fragment {
         int pos = getArguments().getInt(StepActivity.ARG_POS);
         Recipe item = getArguments().getParcelable(StepActivity.ARG_ITEM);
 
-        //if(pos > 0) {
         rootView = inflater.inflate(R.layout.step_fragment, container, false);
         Step step = mItem.steps.get(pos - 1);
 
@@ -65,7 +84,7 @@ public class StepFragment extends Fragment {
                 .Callback() {
                 @Override
                 public void onSuccess() {
-
+                    imageView.setVisibility(View.VISIBLE);
                 }
 
                 @Override
@@ -86,6 +105,9 @@ public class StepFragment extends Fragment {
             mRecipePlayer.initializePlayer();
             mRecipePlayer.attath2view(mPlayerView);
             mPlayerView.setControllerShowTimeoutMs(1000);
+            if (mPlayerPosition != C.TIME_UNSET) {
+                mRecipePlayer.seekTo(mPlayerPosition);
+            }
             mRecipePlayer.prepare(Uri.parse(url));
             if (getUserVisibleHint()) {
                 mRecipePlayer.play();
@@ -96,15 +118,25 @@ public class StepFragment extends Fragment {
         }
 
         ((TextView) rootView.findViewById(R.id.description)).setText(step.description);
-        //}
 
         return rootView;
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mPlayerPosition != C.TIME_UNSET) {
+            outState.putLong(SELECTED_POSITION, mPlayerPosition);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onPause() {
         if (mRecipePlayer != null) {
-            mRecipePlayer.pause();
+            mPlayerPosition = mRecipePlayer.getCurrentPosition();
+            mRecipePlayer.stop();
+            mRecipePlayer.releasePlayer();
+            mRecipePlayer = null;
         }
         super.onPause();
     }
@@ -130,11 +162,4 @@ public class StepFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        if (mRecipePlayer != null) {
-            mRecipePlayer.releasePlayer();
-        }
-        super.onDestroy();
-    }
 }

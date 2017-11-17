@@ -35,6 +35,14 @@ public class IngredientsFragment extends Fragment {
     public IngredientsFragment() {
     }
 
+    public static IngredientsFragment newInstance(Recipe recipe) {
+        IngredientsFragment fragment = new IngredientsFragment();
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(StepActivity.ARG_ITEM, recipe);
+        fragment.setArguments(arguments);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +50,6 @@ public class IngredientsFragment extends Fragment {
         if (!getArguments().containsKey(StepActivity.ARG_ITEM)) {
             getActivity().finish();
         }
-
     }
 
     @Override

@@ -3,6 +3,7 @@ package br.com.soulblighter.bakingapp.ui;
 import android.content.Context;
 import android.net.Uri;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
@@ -66,6 +67,25 @@ public class RecipePlayer {
         if (mExoPlayer != null) {
             mExoPlayer.setPlayWhenReady(false);
         }
+    }
+
+    public void stop() {
+        if (mExoPlayer != null) {
+            mExoPlayer.stop();
+        }
+    }
+
+    public void seekTo(long position) {
+        if (mExoPlayer != null) {
+            mExoPlayer.seekTo(position);
+        }
+    }
+
+    public long getCurrentPosition() {
+        if (mExoPlayer != null) {
+            return mExoPlayer.getCurrentPosition();
+        }
+        return C.TIME_UNSET;
     }
 
     /**

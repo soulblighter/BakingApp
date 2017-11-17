@@ -46,13 +46,13 @@ public class RecipeActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        if (findViewById(R.id.frameLayout2) != null) {
+        //if (findViewById(R.id.frameLayout2) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
             // If this view is present, then the
             // activity should be in two-pane mode.
-            mTwoPane = true;
-        }
+            mTwoPane = getResources().getBoolean(R.bool.isLandscape);
+        //}
 
         if (getIntent().hasExtra(ARG_RECIPE)) {
             mRecipe = getIntent().getParcelableExtra(ARG_RECIPE);
@@ -75,4 +75,5 @@ public class RecipeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
