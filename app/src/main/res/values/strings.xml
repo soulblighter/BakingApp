@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Baking App</string>
+    <string name="title_recipe_detail">Recipe Detail</string>
+
+    <string name="recipe_ingredient">Ingredients</string>
+    <string name="recipe_step_title_placeholder">Step %1$d</string>
+
+    <string name="error_no_connection">Ne network connection</string>
+    <string name="error_parse_json">Error on parse JSON</string>
+
+
+    <plurals name="serving_text">
+        <item quantity="one">one person</item>
+        <item quantity="other">%s people</item>
+    </plurals>
+
+    <plurals name="measure_K">
+        <item quantity="one">%s kilo of</item>
+        <item quantity="other">%s pounds of</item>
+    </plurals>
+    <plurals name="measure_G">
+        <item quantity="one">%s gram of</item>
+        <item quantity="other">%s grams of</item>
+    </plurals>
+    <plurals name="measure_UNIT">
+        <item quantity="one">%s unit of</item>
+        <item quantity="other">%s units of</item>
+    </plurals>
+    <plurals name="measure_TBLSP">
+        <item quantity="one">%s tablespoon of</item>
+        <item quantity="other">%s tablespoons of</item>
+    </plurals>
+    <plurals name="measure_TSP">
+        <item quantity="one">%s tea spoon of</item>
+        <item quantity="other">%s teaspoons of</item>
+    </plurals>
+    <plurals name="measure_CUP">
+        <item quantity="one">%s cup of</item>
+        <item quantity="other">%s cups of</item>
+    </plurals>
+    <plurals name="measure_OZ">
+        <item quantity="one">%s oz of</item>
+        <item quantity="other">%s oz of</item>
+    </plurals>
+
+    <string name="add_widget">Add widget</string>
+    <string name="widget_error_no_recipe">Error loading recipe. Please open the app, update list of recipes,
+        remove this widget and add a new one.</string>
+    <string name="widget_select_recipe">Select recipe for widget</string>
+
+
+</resources>
